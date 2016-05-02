@@ -1,0 +1,6 @@
+---
+
+- name: Deploy Pxl Site
+  hosts: local
+  roles:
+    - ec2_provisioning
