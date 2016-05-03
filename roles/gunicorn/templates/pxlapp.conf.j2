@@ -6,8 +6,15 @@ stop on runlevel [016]
 respawn
 setuid www-data
 setgid www-data
-chdir {{ django_home }}
+chdir {{ django_home }}/
+env DJANGO_SETTINGS_MODULE=pxl_master.settings
+env SECRET_KEY="{{ SECRET_KEY }}"
+env DB_NAME="{{ DB_NAME }}"
+env DB_USER="{{ DB_USER }}"
+env DB_PASSWORD="{{ DB_PASSWORD }}"
+env DB_HOST="{{ DB_HOST }}"
+env DB_PORT="{{ DB_PORT }}"
+env NPR_KEY="{{ NPR_KEY }}"
+env WEATHER_API_URL="{{ WEATHER_API_URL }}"
 
-env DATABASE_URL={{ db_url }}
-
-exec gunicorn -b 127.0.0.1:8000 -w 4 pxl.wsgi --error-logfile /tmp/gunicorn-error.log
+exec gunicorn -b 127.0.0.1:8000 -w 4 pxl_master.wsgi --error-logfile /tmp/gunicorn-error.log

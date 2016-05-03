@@ -1,11 +1,11 @@
-keypair: cf-imager-app
-security_group: ssh-with-http-1
+keypair: pk-aws
+security_group: ssh-access
 instance_type: t2.micro
 ami: ami-9abea4fb
-vpc_subnet_id: subnet-ca619dbc
+vpc_subnet_id: subnet-46b74830
 region: us-west-2
-instance_tags: {"Name": "ansible-built"}
+instance_tags: {"Name": "pxl-master"}
 root_ebs_size: 8
-zone: us-west-2b
-instance_profile_name: pxlapp
+zone: us-west-2a
+instance_profile_name: pxl_admin
 num_instances: 1
