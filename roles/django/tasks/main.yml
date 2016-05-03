@@ -13,7 +13,8 @@
     - git
 
 - name: Clone PXL Repository
-  git: repo=https://github.com/PXL-CF2016/pxl-master.git dest={{ django_home }} force=yes
+  git: repo=https://github.com/PXL-CF2016/pxl-master-server.git dest={{ django_home }} force=yes
+    version="ansible-deployment"
 
 - name: Install Python Dependencies
   sudo: yes
@@ -29,22 +30,28 @@
   include_vars: secrets.yml
 
 
-- name: Set DB URL
-  set_fact: 
-    db_url: "{{ db_host.ec2_engine }}://{{ db_host.ec2_master_username }}:{{ db_password }}@{{ db_host.ec2__address }}:{{ db_host.ec2__port }}/{{ db_host.ec2_DBName }}"
-
 - name: Run Migrations
   environment:
-    DATABASE_URL: "{{ db_url }}"
+    DB_NAME: "{{ DB_NAME }}"
+    DB_USER: "{{ DB_USER }}"
+    DB_PASSWORD: "{{ DB_PASSWORD }}"
+    DB_HOST: "{{ DB_HOST }}"
+    DB_PORT : "{{ DB_PORT }}"
+    SECRET_KEY: "{{ SECRET_KEY }}"
   django_manage:
     app_path: "{{ django_home }}"
-    settings: mysite.production
+    settings: pxl_master.settings
     command: migrate
 
 - name: Collect Static Files
   environment:
-    DATABASE_URL: "{{ db_url }}"
+    DB_NAME: "{{ DB_NAME }}"
+    DB_USER: "{{ DB_USER }}"
+    DB_PASSWORD: "{{ DB_PASSWORD }}"
+    DB_HOST: "{{ DB_HOST }}"
+    DB_PORT : "{{ DB_PORT }}"
+    SECRET_KEY: "{{ SECRET_KEY }}"
   django_manage:
     app_path: "{{ django_home }}"
-    settings: mysite.production
+    settings: pxl_master.settings
     command: collectstatic
