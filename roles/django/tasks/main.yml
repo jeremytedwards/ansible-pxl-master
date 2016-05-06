@@ -38,6 +38,7 @@
     DB_HOST: "{{ DB_HOST }}"
     DB_PORT : "{{ DB_PORT }}"
     SECRET_KEY: "{{ SECRET_KEY }}"
+    NPR_KEY: "{{ NPR_KEY }}"
   django_manage:
     app_path: "{{ django_home }}"
     settings: pxl_master.settings
